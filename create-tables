@@ -1,0 +1,44 @@
+
+
+
+/* 
+Unite two or more tables into one table
+23-08-12 - Merge tables
+
+Download tables from source: 2019 data by quarters from https://divvy-tripdata.s3.amazonaws.com/index.html
+*/
+
+SELECT *
+from `coursera-cert-cyclist.Cyclist_2306_12mo.2207-1`
+UNIONALL
+SELECT *
+from `coursera-cert-cyclist.Cyclist_2306_12mo.2207-2`
+
+  
+/*
+Count nulls of as % for each column
+*/
+
+
+SELECT col_name,
+COUNT(1) AS nulls_count,
+round(100*(count(1)/
+(SELECT count(*)
+FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo`)), 2) AS percent_nulls
+FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo` t,
+UNNEST(REGEXP_EXTRACT_ALL(TO_JSON_STRING(t), r'"(\w+)":null')) col_name
+GROUP BY col_name
+ORDER BY nulls_count DESC
+
+
+/*
+Results
+      
+end_station_id - 15.85%
+end_station_name - 15.84%
+start_station_id - 14.85%
+start_station_name - 14.84%
+end_lat - 0.10%
+end_lng - 0.00%
+*/
+
