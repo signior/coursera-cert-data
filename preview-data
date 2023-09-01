@@ -1,0 +1,124 @@
+
+--------------- Analyze nulls in all columns --------------------------------------------------------------------------------------------
+
+/* 
+See % of nulls
+  Resulted in ~15% of nulls in start_station_name, start_station_id, end_station_name, end_station_id
+  Thought: can I identify missing station names by lat/ldn? No because when searching lat/ldn for same station there are 15K+ values
+  Decision: move forward with errors
+*/
+
+      SELECT COUNT(1)
+      FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo`
+      WHERE [COLUMN] IS NULL
+
+
+--------------- Analyze errors in primary key --------------------------------------------------------------------------------------------
+
+/* 
+See % of errors in ride_id as this is the primary key and should have 16 characters to be complete
+  Resulted in 2,810 or 0.05% with error
+  Can’t delete in free version of Big Query
+  Decision: move forward with errors
+*/
+
+    SELECT LENGTH(ride_id) AS ride_id_length,
+    COUNT(ride_id) as ride_id_erros,
+    COUNT(*) *100.0 / sum(count(*)) over() as errors_percentage
+    FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo`
+    WHERE LENGTH(ride_id) < 16
+    GROUP BY LENGTH(ride_id)
+
+
+--------------- Check for dupliaces --------------------------------------------------------------------------------------------
+
+/*
+Check for duplicates
+	Resulted in only 4 duplicate values
+*/
+
+  	SELECT COUNT (DISTINCT ride_id), COUNT(ride_id)
+    FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo`
+
+
+
+--------------- Ride types --------------------------------------------------------------------------------------------
+
+/*
+See count by ride type
+	Resulted in 3 ride types
+*/
+
+  SELECT count(1), started_at
+  FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo`
+  GROUP BY rideable_type
+
+
+--------------- Ride length --------------------------------------------------------------------------------------------
+
+/*
+See count of rides with time less than 1 min and more than 1 day
+	Resulted in 226,012 rides
+*/
+
+  SELECT *
+  FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo`
+  WHERE TIMESTAMP_DIFF(ended_at, started_at, MINUTE) <= 1 OR
+     TIMESTAMP_DIFF(ended_at, started_at, MINUTE) >= 1440;
+
+
+
+--------------- Count rides by station name  --------------------------------------------------------------------------------------------
+
+/*
+See count of stations by start_station name
+	Resulted in 1,821 stations
+*/
+    SELECT start_station_name, count(*)
+    FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo` 
+    GROUP BY start_station_name
+    ORDER BY start_station_name;
+
+
+/*
+See count of stations by end_station name
+	Resulted in 1,822 stations
+*/
+    SELECT start_station_name, count(*)
+    FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo` 
+    GROUP BY start_station_name
+    ORDER BY start_station_name;
+
+
+
+---------------   --------------------------------------------------------------------------------------------
+
+/*
+See count by ride type
+	Resulted in 3 ride types
+*/
+
+
+
+
+---------------   --------------------------------------------------------------------------------------------
+
+/*
+See count by ride type
+	Resulted in 3 ride types
+*/
+
+
+
+
+---------------   --------------------------------------------------------------------------------------------
+
+/*
+See count by ride type
+	Resulted in 3 ride types
+*/
+
+
+
+
+
