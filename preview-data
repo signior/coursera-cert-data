@@ -89,35 +89,35 @@ See count of stations by end_station name
     GROUP BY start_station_name
     ORDER BY start_station_name;
 
-
-
----------------   --------------------------------------------------------------------------------------------
-
 /*
-See count by ride type
-	Resulted in 3 ride types
+See count of unique stations by column type
+	Resulted in a range of 1,500 to 1,900
 */
-
-
-
-
----------------   --------------------------------------------------------------------------------------------
-
-/*
-See count by ride type
-	Resulted in 3 ride types
-*/
-
+	SELECT COUNT(DISTINCT(start_station_name)) AS unq_startname,
+	   COUNT(DISTINCT(end_station_name)) AS unq_endname,
+	   COUNT(DISTINCT(start_station_id)) AS unq_startid,
+	   COUNT(DISTINCT(end_station_id)) AS unq_endid
+	FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo` 
 
 
 
 ---------------   --------------------------------------------------------------------------------------------
 
 /*
-See count by ride type
-	Resulted in 3 ride types
+See count of rides with a null station value, by ride_type
+	Resulted in aprx 6K rides from classic/dockable rides, and 1.3 M of electric bikes <-- which is weird.
 */
 
+	SELECT rideable_type, count(*) as num_of_rides
+	FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo` 
+	WHERE start_station_name IS NULL AND start_station_id IS NULL OR
+	    end_station_name IS NULL AND end_station_id IS NULL 
+	GROUP BY rideable_type;
+
+
+
+
+https://github.com/iainelli/Capstone-Project-Cyclistic-Case-Study/blob/main/data_cleaning_analysis.sql
 
 
 
