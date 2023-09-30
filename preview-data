@@ -43,16 +43,16 @@ Check for duplicates
 
 
 
---------------- Ride types --------------------------------------------------------------------------------------------
+--------------- Number of rides by ride_type --------------------------------------------------------------------------------------------
 
 /*
 See count by ride type
 	Resulted in 3 ride types: docked_bike, classic_bike, electric_bike
 */
 
-  SELECT count(1), started_at
+ SELECT count(1), rideable_type,
   FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo`
-  GROUP BY rideable_type
+  GROUP BY rideable_type;
 
 
 --------------- Ride length --------------------------------------------------------------------------------------------
