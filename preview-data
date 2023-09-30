@@ -13,6 +13,7 @@ See % of nulls
       WHERE [COLUMN] IS NULL
 
 
+
 --------------- Analyze errors in primary key --------------------------------------------------------------------------------------------
 
 /* 
@@ -46,7 +47,7 @@ Check for duplicates
 
 /*
 See count by ride type
-	Resulted in 3 ride types
+	Resulted in 3 ride types: docked_bike, classic_bike, electric_bike
 */
 
   SELECT count(1), started_at
@@ -58,7 +59,7 @@ See count by ride type
 
 /*
 See count of rides with time less than 1 min and more than 1 day
-	Resulted in 226,012 rides
+	Resulted in 226,012 rides or 4% of total rides
 */
 
   SELECT *
@@ -74,20 +75,20 @@ See count of rides with time less than 1 min and more than 1 day
 See count of stations by start_station name
 	Resulted in 1,821 stations
 */
-    SELECT start_station_name, count(*)
+    SELECT start_station_name, count(*) as station_numbers
     FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo` 
     GROUP BY start_station_name
-    ORDER BY start_station_name;
+    ORDER BY station_numbers DESC;
 
 
 /*
 See count of stations by end_station name
 	Resulted in 1,822 stations
 */
-    SELECT start_station_name, count(*)
+    SELECT end_station_name, count(*) as station_numbers
     FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo` 
-    GROUP BY start_station_name
-    ORDER BY start_station_name;
+    GROUP BY end_station_name
+    ORDER BY station_numbers DESC;
 
 /*
 See count of unique stations by column type
@@ -101,7 +102,7 @@ See count of unique stations by column type
 
 
 
----------------   --------------------------------------------------------------------------------------------
+--------------- Rides with Null station  --------------------------------------------------------------------------------------------
 
 /*
 See count of rides with a null station value, by ride_type
@@ -116,8 +117,28 @@ See count of rides with a null station value, by ride_type
 
 
 
- 
-https://github.com/iainelli/Capstone-Project-Cyclistic-Case-Study/blob/main/data_cleaning_analysis.sql
+
+--------------- Number of rides by member type  --------------------------------------------------------------------------------------------
+
+/*
+See count of rides by member type. Two types: casual (single ride passes, full day passes) and members (annual memership)
+	Resulted in 2,244,252 casual and 3,535,192 members
+*/
+
+SELECT member_casual, count(*) as num_of_members
+	FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo` 
+	GROUP BY member_casual;
+
+
+
+---------------   --------------------------------------------------------------------------------------------
+
+/*
+
+*/
+
+
+
 
 
 
