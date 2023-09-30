@@ -2,6 +2,7 @@
 Casual vs Memners
 - Number of rides by member
 - Rides per month
+- Rides by day of the week
 - Av trip duration
 - Top stations by member
 - Distribution across time of day 
@@ -37,13 +38,17 @@ GROUP BY month
 ORDER BY month DESC;
 
 
----------------  --------------------------------------------------------------------------------------------
+
+--------------- Ride length --------------------------------------------------------------------------------------------
 
 /*
- 
+ See average ride length in minures
 */
 
-
+SELECT ride_id, started_at, ended_at, TIMESTAMP_DIFF(ended_at, started_at, MINUTE) AS ride_length
+  FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo`
+  LIMIT 100;
+  
 
 ---------------  --------------------------------------------------------------------------------------------
 
