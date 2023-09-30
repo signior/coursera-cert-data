@@ -1,7 +1,7 @@
 
 Casual vs Memners
-- Number of rides
-- Av rides per month
+- Number of rides by member
+- Rides per month
 - Av trip duration
 - Top stations by member
 - Distribution across time of day 
@@ -9,8 +9,67 @@ Casual vs Memners
 
 
 
---------------- Create tables --------------------------------------------------------------------------------------------
+--------------- Rides prefernce by member by ride type --------------------------------------------------------------------------------------------
 
 /*
+See number of rides by member type and by ride type
+  Result: both prefer electric bikes more
+*/
 
+SELECT rideable_type, member_casual, count(*) AS amount_of_rides
+  FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo`
+   GROUP BY rideable_type, member_casual
+   ORDER BY member_casual, amount_of_rides DESC
+
+
+--------------- Rides by month by member --------------------------------------------------------------------------------------------
+
+/*
+ See number of rides per month by member type
+  
+*/
+
+SELECT count(ride_id) AS rides,
+  EXTRACT(MONTH FROM started_at) AS month,
+FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo`
+WHERE member_casual='member'
+GROUP BY month
+ORDER BY month DESC;
+
+
+---------------  --------------------------------------------------------------------------------------------
+
+/*
+ 
+*/
+
+
+
+---------------  --------------------------------------------------------------------------------------------
+
+/*
+ 
+*/
+
+
+---------------  --------------------------------------------------------------------------------------------
+
+/*
+ 
+*/
+
+
+
+---------------  --------------------------------------------------------------------------------------------
+
+/*
+ 
+*/
+
+
+
+---------------  --------------------------------------------------------------------------------------------
+
+/*
+ 
 */
