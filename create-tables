@@ -47,6 +47,18 @@ end_lng - 0.00%
 Create a table that has month, day of the week, ride length in min... From timestamp values
 */
 
+SELECT *, 
+  TIMESTAMP_DIFF(ended_at, started_at, MINUTE) AS length_min,
+  EXTRACT(DAYOFWEEK FROM started_at) AS day_week,
+  EXTRACT(DAY FROM started_at) AS day,
+  EXTRACT(DAYOFYEAR FROM started_at) AS day_of_year,
+  EXTRACT(WEEK FROM started_at) AS week,
+  EXTRACT(MONTH FROM started_at) AS month,
+  EXTRACT(QUARTER FROM started_at) AS quarter,
+  FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo`
+
+  
+  
 
 
 ---------------  --------------------------------------------------------------------------------------------
