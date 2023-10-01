@@ -1,9 +1,9 @@
 
 Casual vs Memners
-- Number of rides by member
-- Rides per month
-- Rides by day of the week
-- Av trip duration
+-> Number of rides by member
+-> Rides per month
+-> Rides by day of the week
+-> Av trip duration
 - Top stations by member
 - Distribution across time of day 
 - 
@@ -23,31 +23,33 @@ SELECT rideable_type, member_casual, count(*) AS amount_of_rides
    ORDER BY member_casual, amount_of_rides DESC
 
 
---------------- Rides by month by member --------------------------------------------------------------------------------------------
+--------------- Rides by (time) by member by tide type --------------------------------------------------------------------------------------------
 
 /*
  See number of rides per month by member type
   
 */
 
-SELECT count(ride_id) AS rides,
-  EXTRACT(MONTH FROM started_at) AS month,
-FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo`
-WHERE member_casual='member'
-GROUP BY month
-ORDER BY month DESC;
+SELECT member_casual, rideable_type,
+  count(ride_id) AS rides, day_week,
+FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo-time`
+GROUP BY member_casual, rideable_type, day_week
+ORDER BY member_casual, rideable_type, day_week
 
 
 
---------------- Ride length --------------------------------------------------------------------------------------------
+--------------- Av Ride length --------------------------------------------------------------------------------------------
 
 /*
- See average ride length in minures
+ See average ride length in minutes by member type by day
 */
 
-SELECT ride_id, started_at, ended_at, TIMESTAMP_DIFF(ended_at, started_at, MINUTE) AS ride_length
-  FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo`
-  LIMIT 100;
+SELECT 
+  member_casual, day_week,
+  ROUND(AVG(length_min), 0) AS avg_ride_min,
+  AVG(AVG(length_min)) OVER(PARTITION BY member_casual) AS combined_avg_ride_time
+FROM `coursera-cert-cyclist.Cyclist_2306_12mo.2306-12mo-time`
+GROUP BY member_casual,day_week
   
 
 ---------------  --------------------------------------------------------------------------------------------
