@@ -45,6 +45,7 @@ end_lng - 0.00%
 
 /* 
 Create a table that has month, day of the week, ride length in min... From timestamp values
+New table
 */
 
 SELECT *, 
